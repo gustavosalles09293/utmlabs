@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTMLabs — Trackeamento de vendas para Facebook Ads</title>
+  <meta name="description" content="UTMLabs rastreia cada venda até o anúncio, conjunto e criativo que gerou. API de Conversões, UTMs automáticas, dashboard de lucro em tempo real e integração com as principais plataformas de checkout." />
+  <meta name="theme-color" content="#050b1a" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050b1a'/%3E%3Cpath d='M14 44l12-14 9 8 15-18' stroke='%233dd6ff' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="loader" id="loader"><div class="loader__bar"><span></span></div><code>inicializando pixel…</code></div>
+
+  <!-- ============ CABEÇALHO ============ -->
+  <header class="hdr" id="topo">
+    <div class="shell hdr__in">
+      <a href="#topo" class="brand" aria-label="UTMLabs">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="url(#bg)"/><defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#3dd6ff"/><stop offset="1" stop-color="#7c5cff"/></linearGradient></defs><path d="M14 44l12-14 9 8 15-18" stroke="#050b1a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>UTM<span class="brand__lab">Labs</span></span>
+      </a>
+      <nav class="menu" id="menu">
+        <a href="#rastreio">Rastreamento</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#integracoes">Integrações</a>
+        <a href="#planos">Planos</a>
+      </nav>
+      <div class="hdr__btns">
+        <button class="b b--ghost" data-open-login><svg viewBox="0 0 24 24" width="16"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-4 0-8 2-8 5v1h16v-1c0-3-4-5-8-5z" fill="currentColor"/></svg>Login</button>
+        <a href="#cadastro" class="b b--cyan">Cadastrar</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ BANNER ============ -->
+  <section class="top">
+    <div class="top__bg"><img src="img/hero.jpg" alt="Sala de controle com monitores exibindo gráficos" /></div>
+    <div class="top__fade"></div>
+    <div class="shell top__in">
+      <div class="top__copy">
+        <div class="live"><span></span><code>AO VIVO</code> <b id="liveSales">R$ 1.284.937,40</b> rastreados hoje</div>
+        <h1 class="top__h">
+          <span class="w">Saiba</span> <span class="w">exatamente</span>
+          <span class="w">qual</span> <span class="w hl">anúncio</span>
+          <span class="w">vendeu.</span>
+        </h1>
+        <p class="top__p fade">Rastreamento de vendas para Facebook Ads com precisão de centavo. UTMs automáticas, API de Conversões e um dashboard de lucro real — por campanha, conjunto e criativo.</p>
+        <div class="top__cta fade">
+          <a href="#cadastro" class="b b--cyan b--xl">Começar 7 dias grátis</a>
+          <a href="#dashboard" class="b b--ghost b--xl">Ver dashboard</a>
+        </div>
+      </div>
+      <div class="top__cards fade">
+        <div class="mini mini--a"><small>ROAS hoje</small><b>4,82x</b><i class="up">▲ 18%</i></div>
+        <div class="mini mini--b"><small>Vendas atribuídas</small><b>1.947</b><i class="up">▲ 32%</i></div>
+        <div class="mini mini--c"><small>Lucro líquido</small><b>R$ 87.420</b><i class="up">▲ 11%</i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOGOS ============ -->
+  <section class="trust">
+    <p>Integrado com as principais plataformas do mercado digital</p>
+    <div class="trust__row">
+      <span>Meta Ads</span><span>Kiwify</span><span>Hotmart</span><span>Eduzz</span><span>Shopify</span><span>Yampi</span><span>Monetizze</span><span>Braip</span><span>Google Ads</span><span>TikTok Ads</span>
+    </div>
+  </section>
+
+  <!-- ============ SKYLINE 3D ============ -->
+  <section class="sky" id="rastreio">
+    <div class="sky__pin">
+      <canvas id="skyline"></canvas>
+      <div class="sky__hud">
+        <div class="hud hud--tl"><code>// pipeline de dados</code></div>
+        <div class="sky__phase is-on">
+          <code>01 / CAPTURA</code>
+          <h2>Cada clique<br/>vira um dado.</h2>
+          <p>Nosso script captura UTMs, fbclid e parâmetros do anúncio desde o primeiro acesso — mesmo com bloqueadores e iOS 14+.</p>
+        </div>
+        <div class="sky__phase">
+          <code>02 / ATRIBUIÇÃO</code>
+          <h2>Cada venda<br/>volta ao anúncio.</h2>
+          <p>Quando o checkout aprova, a venda é ligada à campanha, conjunto e criativo exatos. Sem achismo.</p>
+        </div>
+        <div class="sky__phase">
+          <code>03 / OTIMIZAÇÃO</code>
+          <h2>O algoritmo<br/>aprende mais rápido.</h2>
+          <p>Eventos enviados pela API de Conversões com alta qualidade de correspondência. Mais dados, CPA menor.</p>
+        </div>
+        <div class="hud hud--br"><code>eventos/s <b id="evps">0</b></code><div class="hud__meter"><span id="meter"></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DASHBOARD 3D ============ -->
+  <section class="dash" id="dashboard">
+    <div class="shell dash__head">
+      <code class="tag">DASHBOARD</code>
+      <h2 class="h">Seu lucro real,<br/><span class="cy">atualizado a cada segundo.</span></h2>
+    </div>
+    <div class="dash__stage">
+      <div class="panel3d" id="panel3d">
+        <div class="pn__bar"><i></i><i></i><i></i><code>app.utmlabs.com.br/dashboard</code></div>
+        <div class="pn">
+          <aside class="pn__side">
+            <b class="pn__logo">UTM<span>Labs</span></b>
+            <a class="on">◧ Resumo</a><a>◎ Campanhas</a><a>◈ Criativos</a><a>⟲ Vendas</a><a>⚙ Integrações</a>
+          </aside>
+          <div class="pn__main">
+            <div class="kpis">
+              <div class="kpi"><small>Faturamento</small><b data-n="248930">R$ 0</b><i class="up">▲ 22,4%</i></div>
+              <div class="kpi"><small>Gasto com anúncios</small><b data-n="51640">R$ 0</b><i class="dn">▲ 6,1%</i></div>
+              <div class="kpi"><small>ROAS</small><b data-n="4.82" data-f="x">0</b><i class="up">▲ 0,9</i></div>
+              <div class="kpi kpi--hl"><small>Lucro</small><b data-n="132870">R$ 0</b><i class="up">▲ 31,8%</i></div>
+            </div>
+            <div class="chart">
+              <div class="chart__top"><b>Faturamento x Gastos</b><span><i class="l1"></i>Faturamento <i class="l2"></i>Gastos</span></div>
+              <svg viewBox="0 0 600 180" preserveAspectRatio="none">
+                <defs><linearGradient id="ar" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3dd6ff" stop-opacity=".35"/><stop offset="1" stop-color="#3dd6ff" stop-opacity="0"/></linearGradient></defs>
+                <g class="grid"><line x1="0" x2="600" y1="45" y2="45"/><line x1="0" x2="600" y1="90" y2="90"/><line x1="0" x2="600" y1="135" y2="135"/></g>
+                <path class="area" d="M0 150 C 40 140, 70 120, 100 125 S 160 95, 200 100 S 270 70, 300 80 S 370 50, 400 58 S 470 30, 500 38 S 570 15, 600 20 L600 180 L0 180Z" fill="url(#ar)"/>
+                <path class="ln ln1" d="M0 150 C 40 140, 70 120, 100 125 S 160 95, 200 100 S 270 70, 300 80 S 370 50, 400 58 S 470 30, 500 38 S 570 15, 600 20"/>
+                <path class="ln ln2" d="M0 165 C 50 160, 90 150, 120 155 S 200 140, 240 143 S 330 130, 360 135 S 450 120, 480 124 S 560 112, 600 115"/>
+              </svg>
+            </div>
+            <table class="tbl">
+              <thead><tr><th>Campanha</th><th>Gasto</th><th>Vendas</th><th>ROAS</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td><code>[CBO] Lookalike 1% · Criativo 07</code></td><td>R$ 12.480</td><td>214</td><td class="g">6,1x</td><td><span class="st st--on">Escalar</span></td></tr>
+                <tr><td><code>[ABO] Interesses · Vídeo UGC</code></td><td>R$ 8.920</td><td>131</td><td class="g">4,4x</td><td><span class="st st--on">Escalar</span></td></tr>
+                <tr><td><code>[ADV+] Remarketing 30d</code></td><td>R$ 4.310</td><td>97</td><td class="g">7,9x</td><td><span class="st st--ok">Manter</span></td></tr>
+                <tr><td><code>[CBO] Aberto · Carrossel</code></td><td>R$ 6.770</td><td>22</td><td class="r">1,1x</td><td><span class="st st--off">Pausar</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="pop pop--1"><code>purchase</code> enviado à Meta · EMQ 9.2</div>
+      <div class="pop pop--2">💰 Nova venda · R$ 297,00 · <code>utm_content=criativo07</code></div>
+    </div>
+  </section>
+
+  <!-- ============ RECURSOS (STICKY) ============ -->
+  <section class="feat shell">
+    <div class="feat__left">
+      <code class="tag">RECURSOS</code>
+      <h2 class="h">Tudo que um gestor<br/>de tráfego <span class="cy">precisa ver.</span></h2>
+      <p>Pare de abrir 5 abas e uma planilha para descobrir se a campanha deu lucro.</p>
+      <a href="#cadastro" class="b b--cyan">Criar conta</a>
+    </div>
+    <div class="feat__right">
+      <article class="fcard fcard--img"><img src="img/foto1.jpg" alt="Gestor analisando dashboards" /><div><h3>Atribuição por criativo</h3><p>Descubra qual vídeo, imagem ou copy realmente gerou a venda — não apenas o clique.</p></div></article>
+      <article class="fcard"><span class="fcard__n">⇄</span><h3>API de Conversões nativa</h3><p>Eventos de compra, checkout e lead enviados servidor a servidor, com deduplicação automática.</p></article>
+      <article class="fcard fcard--img"><img src="img/foto2.jpg" alt="Funil de vendas em 3D" /><div><h3>Funil completo</h3><p>Do clique ao reembolso: visualize cada etapa e encontre onde você está perdendo dinheiro.</p></div></article>
+      <article class="fcard"><span class="fcard__n">∑</span><h3>Lucro com taxas e impostos</h3><p>Desconte taxa de gateway, imposto, custo do produto e frete automaticamente.</p></article>
+      <article class="fcard"><span class="fcard__n">⚑</span><h3>Regras automáticas</h3><p>Receba alertas no WhatsApp quando o ROAS cair ou quando uma campanha estiver pronta para escalar.</p></article>
+    </div>
+  </section>
+
+  <!-- ============ INTEGRAÇÕES (ÓRBITA 3D) ============ -->
+  <section class="orb" id="integracoes">
+    <div class="orb__bg"><img src="img/foto3.jpg" alt="" /></div>
+    <div class="shell orb__in">
+      <div class="orb__copy">
+        <code class="tag">INTEGRAÇÕES</code>
+        <h2 class="h">Conecte em <span class="cy">2 minutos.</span></h2>
+        <p>Copie um webhook, cole na sua plataforma e pronto. Suas vendas começam a aparecer no dashboard na mesma hora.</p>
+        <ul class="orb__list"><li>Webhook universal</li><li>Script de rastreio leve (4kb)</li><li>Domínio próprio para o pixel</li></ul>
+      </div>
+      <div class="orbit" id="orbit">
+        <div class="orbit__core">UTM<span>Labs</span></div>
+        <div class="orbit__ring">
+          <span style="--i:0">Meta</span><span style="--i:1">Kiwify</span><span style="--i:2">Hotmart</span><span style="--i:3">Shopify</span><span style="--i:4">Eduzz</span><span style="--i:5">Yampi</span><span style="--i:6">TikTok</span><span style="--i:7">Google</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLANOS ============ -->
+  <section class="plans shell" id="planos">
+    <div class="plans__head">
+      <code class="tag">PLANOS</code>
+      <h2 class="h">Preço justo,<br/><span class="cy">sem taxa por venda.</span></h2>
+    </div>
+    <div class="plans__grid">
+      <div class="pl">
+        <code>BASIC</code>
+        <div class="pl__v">R$ 67<small>/mês</small></div>
+        <p>Até R$ 50 mil/mês em vendas</p>
+        <ul><li>1 conta de anúncio</li><li>Dashboard de lucro</li><li>UTMs automáticas</li><li>2 integrações</li></ul>
+        <a href="#cadastro" class="b b--ghost">Escolher</a>
+      </div>
+      <div class="pl pl--hl">
+        <code>PRO · mais usado</code>
+        <div class="pl__v">R$ 147<small>/mês</small></div>
+        <p>Até R$ 300 mil/mês em vendas</p>
+        <ul><li>Contas de anúncio ilimitadas</li><li>API de Conversões</li><li>Atribuição por criativo</li><li>Integrações ilimitadas</li><li>Alertas no WhatsApp</li></ul>
+        <a href="#cadastro" class="b b--cyan">Escolher Pro</a>
+      </div>
+      <div class="pl">
+        <code>AGENCY</code>
+        <div class="pl__v">R$ 397<small>/mês</small></div>
+        <p>Vendas ilimitadas</p>
+        <ul><li>Multi-clientes</li><li>Relatórios white-label</li><li>Acesso por equipe</li><li>Suporte prioritário</li></ul>
+        <a href="#cadastro" class="b b--ghost">Falar com time</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CADASTRO ============ -->
+  <section class="reg" id="cadastro">
+    <div class="shell reg__in">
+      <div class="reg__copy">
+        <code class="tag">CADASTRO</code>
+        <h2 class="h">Comece a rastrear<br/><span class="cy">hoje.</span></h2>
+        <div class="term">
+          <div class="term__bar"><i></i><i></i><i></i></div>
+          <pre id="term"><span class="c">$</span> utmlabs connect --meta
+<span class="o">✔ pixel verificado</span>
+<span class="o">✔ api de conversões ativa</span>
+<span class="o">✔ webhook kiwify recebido</span>
+<span class="c">$</span> <span class="cur">_</span></pre>
+        </div>
+      </div>
+      <form class="frm" id="signupForm" novalidate>
+        <div class="frm__body">
+          <div class="fl"><label for="s-nome">Nome</label><input id="s-nome" name="nome" type="text" autocomplete="off" /></div>
+          <div class="fl"><label for="s-email">E-mail</label><input id="s-email" name="email" type="email" autocomplete="off" /></div>
+          <div class="fl"><label for="s-tel">Telefone</label><input id="s-tel" name="telefone" type="tel" placeholder="(00) 00000-0000" autocomplete="off" /></div>
+          <div class="fl2">
+            <div class="fl"><label for="s-senha">Senha</label><input id="s-senha" name="senha" type="password" autocomplete="new-password" /></div>
+            <div class="fl"><label for="s-senha2">Confirmar senha</label><input id="s-senha2" name="senha2" type="password" autocomplete="new-password" /></div>
+          </div>
+          <p class="frm__err" id="signupError"></p>
+          <button type="submit" class="b b--cyan b--xl b--w">Confirmar</button>
+        </div>
+        <div class="frm__ok" hidden>
+          <div class="ok"><span></span></div>
+          <h3>Seus dados foram enviados para análise.</h3>
+          <p>Avisaremos no seu e-mail assim que seu acesso for liberado.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ RODAPÉ ============ -->
+  <footer class="ft">
+    <div class="shell ft__in">
+      <a href="#topo" class="brand"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#3dd6ff"/><path d="M14 44l12-14 9 8 15-18" stroke="#050b1a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>UTM<span class="brand__lab">Labs</span></span></a>
+      <p>Rastreamento de vendas para quem leva tráfego pago a sério.</p>
+      <p class="ft__c">© <span id="ano"></span> UTMLabs · Meta e Facebook são marcas de seus respectivos donos.</p>
+    </div>
+  </footer>
+
+  <!-- ============ POPUP LOGIN ============ -->
+  <div class="mdl" id="loginModal" aria-hidden="true">
+    <div class="mdl__bg" data-close></div>
+    <div class="mdl__win" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <div class="mdl__scan"></div>
+      <button class="mdl__x" data-close aria-label="Fechar">✕</button>
+      <code class="tag">ACESSO SEGURO</code>
+      <h3 id="loginTitle">Entrar na plataforma</h3>
+      <form id="loginForm" novalidate>
+        <div class="fl"><label for="l-user">Login</label><input id="l-user" type="text" autocomplete="off" /></div>
+        <div class="fl"><label for="l-pass">Senha</label><input id="l-pass" type="password" autocomplete="off" /></div>
+        <p class="frm__err" id="loginError"></p>
+        <button type="submit" class="b b--cyan b--w">Entrar</button>
+      </form>
+      <p class="mdl__f">Novo por aqui? <a href="#cadastro" data-close>Criar conta</a></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }</script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
